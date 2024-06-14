@@ -25,6 +25,7 @@ class ChatScreen extends StatelessWidget {
             radius: 30,
             backgroundColor: user.color,
             child: user.userImagePath == null
+                //if there is profile photo display it, if no display the initials
                 ? Text(
                     "${user.fullname.split(' ').first[0]}${user.fullname.split(' ')[1][0]}",
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(

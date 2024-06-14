@@ -32,28 +32,57 @@ class UserChat extends StatelessWidget {
           ),
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
+              //formatter
               final dateFormatter = DateFormat('dd.MM.yy');
+              //get current date and time
               final now = DateTime.now();
-              final message =
+              //get last messege in the chat
+              final lastChatMessage =
                   BlocProvider.of<HomeCubit>(context).getChatLastMessage(user);
               String timeStampToDisplay = '';
-              if (message != null) {
-                if (message.dateTime.difference(now).inDays.abs() < 1) {
-                  if (message.dateTime.difference(now).inHours.abs() < 1) {
-                    if (message.dateTime.difference(now).inMinutes.abs() == 0) {
+              if (lastChatMessage != null) {
+                //check the difference between last messege sent date and now and make according timestamp
+                if (lastChatMessage.dateTime.difference(now).inDays.abs() < 1) {
+                  if (lastChatMessage.dateTime.difference(now).inHours.abs() <
+                      1) {
+                    if (lastChatMessage.dateTime
+                            .difference(now)
+                            .inMinutes
+                            .abs() ==
+                        0) {
                       timeStampToDisplay = 'только что';
                     } else {
                       timeStampToDisplay =
-                          '${message.dateTime.difference(now).inMinutes.abs()} минуты назад';
+                          '${lastChatMessage.dateTime.difference(now).inMinutes.abs()} минуты назад';
                     }
                   } else {
                     timeStampToDisplay =
-                        '${message.dateTime.hour}:${message.dateTime.minute}';
+                        '${lastChatMessage.dateTime.hour}:${lastChatMessage.dateTime.minute}';
                   }
-                } else if (message.dateTime.difference(now).inDays.abs() < 2) {
+                } else if (lastChatMessage.dateTime
+                        .difference(now)
+                        .inDays
+                        .abs() <
+                    2) {
                   timeStampToDisplay = "Вчера";
                 } else {
-                  timeStampToDisplay = dateFormatter.format(message.dateTime);
+                  timeStampToDisplay =
+                      dateFormatter.format(lastChatMessage.dateTime);
+                }
+              }
+
+              String lastMessageToDisplay = '';
+
+              if (lastChatMessage != null) {
+                //check if the messege was sent by you or not
+                if (lastChatMessage.senderUserId != user.id) {
+                  lastMessageToDisplay = 'Вы: ';
+                }
+                //check if the last messsega was photo only
+                if (lastChatMessage.filePath != null) {
+                  lastMessageToDisplay = '$lastMessageToDisplayфотография';
+                } else {
+                  lastMessageToDisplay += lastChatMessage.text!;
                 }
               }
 
@@ -64,6 +93,7 @@ class UserChat extends StatelessWidget {
                   radius: 30,
                   backgroundColor: user.color,
                   child: user.userImagePath == null
+                      //if there is profile photo display it, if no display the initials
                       ? Text(
                           "${user.fullname.split(' ').first[0]}${user.fullname.split(' ')[1][0]}",
                           style: Theme.of(context)
@@ -81,14 +111,7 @@ class UserChat extends StatelessWidget {
                       color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.w600),
                 ),
-                subtitle:
-                    //check if there is any message
-                    message == null
-                        ? null
-                        : Text(
-                            //check if the last message was photo or message
-                            message.text == null ? "photo" : message.text!,
-                          ),
+                subtitle: Text(lastMessageToDisplay),
                 //check if there is any message)
                 trailing: Text(timeStampToDisplay),
               );

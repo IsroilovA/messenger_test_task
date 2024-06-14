@@ -15,20 +15,25 @@ class ChatCubit extends Cubit<ChatState> {
       : _messengerRepository = messengerRepository,
         super(ChatInitial());
 
+  //repository
   final MessengerRepository _messengerRepository;
 
+  //get ucurrent 'logged in' user
   User getCurrentUser() => _messengerRepository.getCurrentUser();
 
+  //send messege (submit)
   Future<void> sendMessage(
       {required String messageText,
       File? messegePhoto,
       required User user}) async {
+    //check if there is anything to change
     if (messageText.trim().isEmpty && messegePhoto == null) {
       return;
     }
 
     final currentUser = _messengerRepository.getCurrentUser();
 
+    //send message and emit initial to rerender ui
     try {
       _messengerRepository.addMessage(
         Message(
@@ -41,10 +46,12 @@ class ChatCubit extends Cubit<ChatState> {
       );
       emit(ChatInitial());
     } catch (e) {
+      //if error emit this
       emit(ChatError(e.toString()));
     }
   }
 
+  //fetch all chat messages
   Future<void> fetchChatMessages(User user) async {
     try {
       final messages = await _messengerRepository.getChatMessages(user);
