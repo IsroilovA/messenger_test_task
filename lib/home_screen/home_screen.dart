@@ -25,71 +25,77 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Column(
-          children: [
-            Platform.isIOS
-                ? CupertinoSearchTextField(
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface),
-                    onChanged: (value) {
-                      BlocProvider.of<HomeCubit>(context).onSearch(value);
-                    },
-                  )
-                : SearchBar(
-                    hintText: "Поиск",
-                    leading: const Icon(Icons.search),
-                    onChanged: (value) {
-                      BlocProvider.of<HomeCubit>(context).onSearch(value);
-                    },
-                  ),
-            const SizedBox(
-              height: 20,
-            ),
-            BlocBuilder<HomeCubit, HomeState>(
-              builder: (context, state) {
-                if (state is HomeInitial) {
-                  BlocProvider.of<HomeCubit>(context).getUsers();
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                } else if (state is HomeUsersLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                } else if (state is HomeUsersFetched) {
-                  return Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.users.length,
-                      itemBuilder: (context, index) {
-                        return UserChat(
-                          user: state.users[index],
-                        );
+        //pull down to refresh
+        child: RefreshIndicator.adaptive(
+          onRefresh: () {
+            return BlocProvider.of<HomeCubit>(context).getUsers();
+          },
+          child: Column(
+            children: [
+              Platform.isIOS
+                  ? CupertinoSearchTextField(
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface),
+                      onChanged: (value) {
+                        BlocProvider.of<HomeCubit>(context).onSearch(value);
+                      },
+                    )
+                  : SearchBar(
+                      hintText: "Поиск",
+                      leading: const Icon(Icons.search),
+                      onChanged: (value) {
+                        BlocProvider.of<HomeCubit>(context).onSearch(value);
                       },
                     ),
-                  );
-                } else if (state is HomeError) {
-                  return Center(
-                    child: Text(
-                      state.message,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                    ),
-                  );
-                } else {
-                  return Center(
-                    child: Text(
-                      "something went wrong",
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                    ),
-                  );
-                }
-              },
-            )
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  if (state is HomeInitial) {
+                    BlocProvider.of<HomeCubit>(context).getUsers();
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  } else if (state is HomeUsersLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  } else if (state is HomeUsersFetched) {
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.users.length,
+                        itemBuilder: (context, index) {
+                          return UserChat(
+                            user: state.users[index],
+                          );
+                        },
+                      ),
+                    );
+                  } else if (state is HomeError) {
+                    return Center(
+                      child: Text(
+                        state.message,
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        "something went wrong",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                      ),
+                    );
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
