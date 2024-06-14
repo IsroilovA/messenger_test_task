@@ -49,6 +49,16 @@ class MessengerRepository {
 
   User getLoggedUser() => loggedUser;
 
+  List<Message> getChatMessages(User user) {
+    final userMessages = messages
+        .where((element) =>
+            element.receiverUserId == user.id ||
+            element.senderUserId == user.id)
+        .toList();
+    userMessages.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    return userMessages;
+  }
+
   Message getChatLastMessage(User user) {
     final userMessages = messages
         .where((element) =>

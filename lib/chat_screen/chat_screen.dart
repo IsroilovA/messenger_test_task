@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:messenger_test_task/chat_screen/widgets/chat_messages.dart';
 import 'package:messenger_test_task/chat_screen/widgets/new_nessages.dart';
 import 'package:messenger_test_task/data/models/user.dart';
 
@@ -38,14 +39,14 @@ class ChatScreen extends StatelessWidget {
           subtitle: Text(user.isOnline ? 'online' : 'offline'),
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.only(bottom: 30),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 30),
         child: Column(
           children: [
             Expanded(
-              child: Text("placeholder"),
+              child: ChatMessages(user: user),
             ),
-            NewMessages(),
+            const NewMessages(),
           ],
         ),
       ),
