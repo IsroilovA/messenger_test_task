@@ -6,5 +6,7 @@ class User {
   final String id;
   final String fullname;
   final String? userImagePath;
-  User({id, required this.fullname, this.userImagePath}) : id = id ?? uuid.v4();
+  final bool isOnline;
+  User({id, required this.fullname, this.userImagePath, this.isOnline = false})
+      : id = id ?? uuid.v4();
 }

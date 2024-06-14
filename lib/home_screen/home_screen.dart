@@ -8,14 +8,9 @@ import 'package:messenger_test_task/home_screen/widgets/user_chat.dart';
 import 'package:messenger_test_task/service/locator.dart';
 import 'package:messenger_test_task/service/messenger_repository.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'Чаты',
           style: Theme.of(context)
               .textTheme
-              .displayLarge!
+              .displayMedium!
               .copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
       ),
@@ -41,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onChanged: (value) {},
                   )
                 : SearchBar(
-                    hintText: "Search",
+                    hintText: "Поиск",
                     leading: const Icon(Icons.search),
                     onChanged: (value) {},
                   ),
