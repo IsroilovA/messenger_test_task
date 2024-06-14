@@ -18,6 +18,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         title: ListTile(
           titleAlignment: ListTileTitleAlignment.top,
           contentPadding: EdgeInsets.zero,
@@ -52,7 +53,9 @@ class ChatScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               Expanded(
-                child: ChatMessages(user: user),
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ChatMessages(user: user)),
               ),
               NewMessages(user: user),
             ],

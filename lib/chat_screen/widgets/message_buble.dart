@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:messenger_test_task/data/models/message.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -24,7 +25,7 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final dateFormatter = DateFormat('HH:mm');
 
     return Row(
       // The side of the chat screen the message should show at.
@@ -34,12 +35,15 @@ class MessageBubble extends StatelessWidget {
           crossAxisAlignment:
               isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            if (isFirstInSequence) const SizedBox(height: 8),
+            const SizedBox(height: 5),
             Container(
               decoration: BoxDecoration(
                 color: isMe
                     ? const Color.fromARGB(255, 118, 227, 121)
-                    : theme.colorScheme.surfaceContainerHighest.withAlpha(200),
+                    : Theme.of(context)
+                        .colorScheme
+                        .surfaceContainerHighest
+                        .withAlpha(200),
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(12),
                   topRight: const Radius.circular(12),
@@ -60,13 +64,30 @@ class MessageBubble extends StatelessWidget {
               margin: const EdgeInsets.symmetric(
                 horizontal: 12,
               ),
-              child: Text(
-                message.text!,
-                style: const TextStyle(
-                  height: 1.5,
-                  color: Colors.black,
+              child: IntrinsicWidth(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      message.text!,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Colors.black,
+                          ),
+                      softWrap: true,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        dateFormatter.format(message.dateTime),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: Colors.black,
+                            ),
+                        softWrap: true,
+                      ),
+                    ),
+                  ],
                 ),
-                softWrap: true,
               ),
             ),
           ],

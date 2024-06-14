@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:messenger_test_task/data/models/user.dart';
 import 'package:messenger_test_task/home_screen/cubit/home_cubit.dart';
 import 'package:messenger_test_task/service/locator.dart';
@@ -32,8 +33,31 @@ class UserChat extends StatelessWidget {
           ),
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
+              final dateFormatter = DateFormat('dd.MM.yy');
+              final now = DateTime.now();
               final message =
                   BlocProvider.of<HomeCubit>(context).getChatLastMessage(user);
+              String timeStampToDisplay = '';
+              if (message != null) {
+                if (message.dateTime.difference(now).inDays.abs() < 1) {
+                  if (message.dateTime.difference(now).inHours.abs() < 1) {
+                    if (message.dateTime.difference(now).inMinutes.abs() == 0) {
+                      timeStampToDisplay = 'только что';
+                    } else {
+                      timeStampToDisplay =
+                          '${message.dateTime.difference(now).inMinutes.abs()} минуты назад';
+                    }
+                  } else {
+                    timeStampToDisplay =
+                        '${message.dateTime.hour}:${message.dateTime.minute}';
+                  }
+                } else if (message.dateTime.difference(now).inDays.abs() < 2) {
+                  timeStampToDisplay = "Вчера";
+                } else {
+                  timeStampToDisplay = dateFormatter.format(message.dateTime);
+                }
+              }
+
               return ListTile(
                 titleAlignment: ListTileTitleAlignment.top,
                 contentPadding: EdgeInsets.zero,
@@ -69,10 +93,8 @@ class UserChat extends StatelessWidget {
                             //check if the last message was photo or message
                             message.text == null ? "photo" : message.text!,
                           ),
-                //check if there is any message
-                trailing: message == null
-                    ? null
-                    : Text(message.dateTime.toIso8601String()),
+                //check if there is any message)
+                trailing: Text(timeStampToDisplay),
               );
             },
           ),

@@ -23,7 +23,7 @@ class _NewMessagesState extends State<NewMessages> {
 
   void _submitMessage() {
     final enteredMessage = _messageController.text;
-
+    
     if (enteredMessage.trim().isEmpty) {
       return;
     }

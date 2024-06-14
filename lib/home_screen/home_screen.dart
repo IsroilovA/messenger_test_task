@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         centerTitle: false,
         title: Text(
           'Чаты',
@@ -60,6 +61,7 @@ class HomeScreen extends StatelessWidget {
                   } else if (state is HomeUsersFetched) {
                     return Expanded(
                       child: ListView.builder(
+                        shrinkWrap: true,
                         itemCount: state.users.length,
                         itemBuilder: (context, index) {
                           return UserChat(

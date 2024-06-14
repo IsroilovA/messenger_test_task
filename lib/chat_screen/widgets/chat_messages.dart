@@ -19,28 +19,33 @@ class ChatMessages extends StatelessWidget {
           BlocProvider.of<ChatCubit>(context).fetchChatMessages(user);
           return const Center(child: CircularProgressIndicator.adaptive());
         } else if (state is ChatMessagesFetched) {
-          return ListView.builder(
-            itemCount: state.messages.length,
-            itemBuilder: (context, index) {
-              final chatMessage = state.messages[index];
-              final nextChatMessage = index + 1 < state.messages.length
-                  ? state.messages[index + 1]
-                  : null;
-              final currentMessageUserId = chatMessage.senderUserId;
-              final nextMessageUserId = nextChatMessage?.senderUserId;
-              final nextUserIsSame = currentMessageUserId == nextMessageUserId;
-              if (nextUserIsSame) {
-                return MessageBubble.next(
-                  message: chatMessage,
-                  isMe: currentUser.id == currentMessageUserId,
-                );
-              } else {
-                return MessageBubble.last(
-                  message: chatMessage,
-                  isMe: currentUser.id == currentMessageUserId,
-                );
-              }
-            },
+          return SingleChildScrollView(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.messages.length,
+              itemBuilder: (context, index) {
+                final chatMessage = state.messages[index];
+                final nextChatMessage = index + 1 < state.messages.length
+                    ? state.messages[index + 1]
+                    : null;
+                final currentMessageUserId = chatMessage.senderUserId;
+                final nextMessageUserId = nextChatMessage?.senderUserId;
+                final nextUserIsSame =
+                    currentMessageUserId == nextMessageUserId;
+                if (nextUserIsSame) {
+                  return MessageBubble.next(
+                    message: chatMessage,
+                    isMe: currentUser.id == currentMessageUserId,
+                  );
+                } else {
+                  return MessageBubble.last(
+                    message: chatMessage,
+                    isMe: currentUser.id == currentMessageUserId,
+                  );
+                }
+              },
+            ),
           );
         } else if (state is ChatError) {
           return Center(
