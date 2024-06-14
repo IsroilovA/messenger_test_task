@@ -27,7 +27,6 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Platform.isIOS
                 ? CupertinoSearchTextField(
@@ -40,6 +39,9 @@ class HomeScreen extends StatelessWidget {
                     leading: const Icon(Icons.search),
                     onChanged: (value) {},
                   ),
+            const SizedBox(
+              height: 20,
+            ),
             BlocProvider(
               create: (context) => HomeCubit(
                 messengerRepository: locator<MessengerRepository>(),
