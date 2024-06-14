@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:messenger_test_task/home_screen/home_screen.dart';
+import 'package:messenger_test_task/service/locator.dart';
 
 // Theme for the light mode
 final lightTheme = ThemeData(
@@ -31,13 +32,13 @@ class GoogleFonts {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initialiseLocator();
   runApp(const App());
 }
 
 // Root widget of the application
 class App extends StatelessWidget {
   const App({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
