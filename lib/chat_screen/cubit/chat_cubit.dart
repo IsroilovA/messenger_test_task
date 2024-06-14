@@ -13,6 +13,17 @@ class ChatCubit extends Cubit<ChatState> {
 
   final MessengerRepository _messengerRepository;
 
+  User getCurrentUser() => _messengerRepository.getCurrentUser();
+
+  Future<void> sendMessage(Message message) async {
+    try {
+      _messengerRepository.addMessage(message);
+      emit(ChatInitial());
+    } catch (e) {
+      emit(ChatError(e.toString()));
+    }
+  }
+
   Future<void> fetchChatMessages(User user) async {
     try {
       final messages = await _messengerRepository.getChatMessages(user);

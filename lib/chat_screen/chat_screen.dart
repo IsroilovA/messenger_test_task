@@ -2,9 +2,13 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:messenger_test_task/chat_screen/cubit/chat_cubit.dart';
 import 'package:messenger_test_task/chat_screen/widgets/chat_messages.dart';
 import 'package:messenger_test_task/chat_screen/widgets/new_nessages.dart';
 import 'package:messenger_test_task/data/models/user.dart';
+import 'package:messenger_test_task/service/locator.dart';
+import 'package:messenger_test_task/service/messenger_repository.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key, required this.user});
@@ -41,13 +45,18 @@ class ChatScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 30),
-        child: Column(
-          children: [
-            Expanded(
-              child: ChatMessages(user: user),
-            ),
-            const NewMessages(),
-          ],
+        child: BlocProvider(
+          create: (context) =>
+              ChatCubit(messengerRepository: locator<MessengerRepository>()),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Expanded(
+                child: ChatMessages(user: user),
+              ),
+              NewMessages(user: user),
+            ],
+          ),
         ),
       ),
     );

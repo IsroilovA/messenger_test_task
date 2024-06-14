@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:messenger_test_task/chat_screen/chat_screen.dart';
 import 'package:messenger_test_task/data/models/user.dart';
 import 'package:messenger_test_task/home_screen/cubit/home_cubit.dart';
 import 'package:messenger_test_task/service/locator.dart';
@@ -18,11 +17,7 @@ class UserChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ChatScreen(user: user),
-          ),
-        );
+        BlocProvider.of<HomeCubit>(context).navigateToChat(context, user);
       },
       child: Container(
         padding: const EdgeInsets.all(10),

@@ -13,33 +13,64 @@ List<User> users = [
 class MessengerRepository {
   List<Message> messages = [
     Message(
-        dateTime: DateTime(2024, 5, 13),
-        senderUserId: loggedUser.id,
-        receiverUserId: users.first.id,
-        text: 'Привет'),
+      dateTime: DateTime(2024, 5, 14),
+      senderUserId: loggedUser.id,
+      receiverUserId: users[1].id,
+      text: 'Доброе утро',
+    ),
     Message(
-      dateTime: DateTime(2024, 6, 13),
+      dateTime: DateTime(2024, 6, 14),
       senderUserId: users[1].id,
       receiverUserId: loggedUser.id,
-      text: 'Я вышел',
+      text: 'Как ты?',
     ),
     Message(
-      dateTime: DateTime(2024, 2, 20),
+      dateTime: DateTime(2024, 3, 22),
       senderUserId: users[2].id,
       receiverUserId: loggedUser.id,
-      text: 'Я готов',
+      text: 'На месте',
     ),
     Message(
-      dateTime: DateTime(2024, 5, 13),
+      dateTime: DateTime(2024, 5, 16),
       senderUserId: loggedUser.id,
       receiverUserId: users[3].id,
-      text: 'Уже сделал?',
+      text: 'Что нового?',
     ),
     Message(
-      dateTime: DateTime(2024, 5, 15),
+      dateTime: DateTime(2024, 5, 17),
       senderUserId: loggedUser.id,
-      receiverUserId: users[3].id,
-      text: 'Как дела?',
+      receiverUserId: users[2].id,
+      text: 'Отлично!',
+    ),
+    Message(
+      dateTime: DateTime(2024, 4, 10),
+      senderUserId: users[2].id,
+      receiverUserId: loggedUser.id,
+      text: 'Увидимся завтра',
+    ),
+    Message(
+      dateTime: DateTime(2024, 5, 18),
+      senderUserId: users[0].id,
+      receiverUserId: loggedUser.id,
+      text: 'Привет, давно не виделись',
+    ),
+    Message(
+      dateTime: DateTime(2024, 5, 20),
+      senderUserId: loggedUser.id,
+      receiverUserId: users[1].id,
+      text: 'Ты здесь?',
+    ),
+    Message(
+      dateTime: DateTime(2024, 6, 1),
+      senderUserId: users[3].id,
+      receiverUserId: loggedUser.id,
+      text: 'На связи',
+    ),
+    Message(
+      dateTime: DateTime(2024, 5, 21),
+      senderUserId: loggedUser.id,
+      receiverUserId: users[2].id,
+      text: 'До встречи',
     ),
   ];
 
@@ -47,7 +78,7 @@ class MessengerRepository {
     return users;
   }
 
-  User getLoggedUser() => loggedUser;
+  User getCurrentUser() => loggedUser;
 
   List<Message> getChatMessages(User user) {
     final userMessages = messages
