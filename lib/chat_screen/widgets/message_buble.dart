@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:messenger_test_task/data/models/message.dart';
@@ -69,13 +71,16 @@ class MessageBubble extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      message.text!,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Colors.black,
-                          ),
-                      softWrap: true,
-                    ),
+                    if (message.filePath != null)
+                      Image.file(File(message.filePath!)),
+                    if (message.text != null)
+                      Text(
+                        message.text!,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              color: Colors.black,
+                            ),
+                        softWrap: true,
+                      ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

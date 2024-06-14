@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:messenger_test_task/chat_screen/cubit/chat_cubit.dart';
-import 'package:messenger_test_task/data/models/message.dart';
 import 'package:messenger_test_task/data/models/user.dart';
 
 class NewMessages extends StatefulWidget {
@@ -14,6 +12,7 @@ class NewMessages extends StatefulWidget {
 }
 
 class _NewMessagesState extends State<NewMessages> {
+
   final FocusNode _focus = FocusNode();
   final _messageController = TextEditingController();
 
@@ -37,28 +36,6 @@ class _NewMessagesState extends State<NewMessages> {
     });
   }
 
-  void _submitMessage() {
-    final enteredMessage = _messageController.text;
-
-    if (enteredMessage.trim().isEmpty) {
-      return;
-    }
-
-    FocusScope.of(context).unfocus();
-    _messageController.clear();
-
-    final currentUser = BlocProvider.of<ChatCubit>(context).getCurrentUser();
-    //save
-    BlocProvider.of<ChatCubit>(context).sendMessage(
-      Message(
-        dateTime: DateTime.now(),
-        text: enteredMessage,
-        senderUserId: currentUser.id,
-        receiverUserId: widget.user.id,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -74,7 +51,10 @@ class _NewMessagesState extends State<NewMessages> {
                 color: Theme.of(context).colorScheme.surfaceDim,
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  BlocProvider.of<ChatCubit>(context)
+                      .pickImage(context, widget.user);
+                },
                 iconSize: 40,
                 icon: const Icon(Icons.attach_file),
               ),
@@ -110,7 +90,13 @@ class _NewMessagesState extends State<NewMessages> {
                     ),
                     child: IconButton(
                       color: Theme.of(context).colorScheme.primary,
-                      onPressed: _submitMessage,
+                      onPressed: () {
+                        BlocProvider.of<ChatCubit>(context).sendMessage(
+                            messageText: _messageController.text,
+                            user: widget.user);
+                        FocusScope.of(context).unfocus();
+                        _messageController.clear();
+                      },
                       icon: const Icon(Icons.send),
                       iconSize: 40,
                     ),

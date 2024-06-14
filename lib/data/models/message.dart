@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -16,7 +18,8 @@ class Message {
     required this.dateTime,
     required this.senderUserId,
     required this.receiverUserId,
-    this.filePath,
+    File? file,
     this.isRead = true,
-  }) : id = id ?? uuid.v4();
+  })  : id = id ?? uuid.v4(),
+        filePath = file?.path;
 }

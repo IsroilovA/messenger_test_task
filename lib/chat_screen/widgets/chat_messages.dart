@@ -69,34 +69,6 @@ class ChatMessages extends StatelessWidget {
               },
             ),
           );
-
-          //   ListView.builder(
-          //     shrinkWrap: true,
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     itemCount: state.messages.length,
-          //     itemBuilder: (context, index) {
-          //       final chatMessage = state.messages[index];
-          //       final nextChatMessage = index + 1 < state.messages.length
-          //           ? state.messages[index + 1]
-          //           : null;
-          //       final currentMessageUserId = chatMessage.senderUserId;
-          //       final nextMessageUserId = nextChatMessage?.senderUserId;
-          //       final nextUserIsSame =
-          //           currentMessageUserId == nextMessageUserId;
-          //       if (nextUserIsSame) {
-          //         return MessageBubble.next(
-          //           message: chatMessage,
-          //           isMe: currentUser.id == currentMessageUserId,
-          //         );
-          //       } else {
-          //         return MessageBubble.last(
-          //           message: chatMessage,
-          //           isMe: currentUser.id == currentMessageUserId,
-          //         );
-          //       }
-          //     },
-          //   ),
-          // );
         } else if (state is ChatError) {
           return Center(
             child: Text(
