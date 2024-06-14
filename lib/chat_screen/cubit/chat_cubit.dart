@@ -95,6 +95,7 @@ class ChatCubit extends Cubit<ChatState> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
                 onPressed: () {
@@ -109,6 +110,8 @@ class ChatCubit extends Cubit<ChatState> {
                       messageText: messageController.text,
                       messegePhoto: image,
                       user: user);
+                  FocusScope.of(context).unfocus();
+                  messageController.clear();
                   Navigator.pop(ctx);
                 },
                 icon: const Icon(Icons.send),
