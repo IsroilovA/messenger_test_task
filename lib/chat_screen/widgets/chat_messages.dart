@@ -36,6 +36,7 @@ class ChatMessages extends StatelessWidget {
                           ),
                     ),
                     ListView.builder(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: state.messages.values.toList()[index1].length,

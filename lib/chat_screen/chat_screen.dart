@@ -24,9 +24,7 @@ class ChatScreen extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           leading: CircleAvatar(
             radius: 30,
-            //random color
-            backgroundColor: Color((Random().nextDouble() * 0xFFFFFF).toInt())
-                .withOpacity(1.0),
+            backgroundColor: user.color,
             child: user.userImagePath == null
                 ? Text(
                     "${user.fullname.split(' ').first[0]}${user.fullname.split(' ')[1][0]}",

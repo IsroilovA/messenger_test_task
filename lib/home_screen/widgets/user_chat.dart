@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -63,10 +62,7 @@ class UserChat extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 leading: CircleAvatar(
                   radius: 30,
-                  //random color
-                  backgroundColor:
-                      Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                          .withOpacity(1.0),
+                  backgroundColor: user.color,
                   child: user.userImagePath == null
                       ? Text(
                           "${user.fullname.split(' ').first[0]}${user.fullname.split(' ')[1][0]}",
