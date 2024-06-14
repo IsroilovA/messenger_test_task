@@ -76,15 +76,22 @@ class MessageBubble extends StatelessWidget {
                           ),
                       softWrap: true,
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        dateFormatter.format(message.dateTime),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: Colors.black,
-                            ),
-                        softWrap: true,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          dateFormatter.format(message.dateTime),
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: Colors.black,
+                                  ),
+                          softWrap: true,
+                        ),
+                        Icon(
+                          message.isRead ? Icons.done_all : Icons.done,
+                          size: 15,
+                        ),
+                      ],
                     ),
                   ],
                 ),

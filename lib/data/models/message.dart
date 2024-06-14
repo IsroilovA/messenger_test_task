@@ -9,6 +9,7 @@ class Message {
   final String senderUserId;
   final String receiverUserId;
   final String? filePath;
+  final bool isRead;
   Message({
     id,
     this.text,
@@ -16,5 +17,6 @@ class Message {
     required this.senderUserId,
     required this.receiverUserId,
     this.filePath,
+    this.isRead = true,
   }) : id = id ?? uuid.v4();
 }
