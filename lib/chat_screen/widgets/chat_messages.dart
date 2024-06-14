@@ -21,32 +21,81 @@ class ChatMessages extends StatelessWidget {
         } else if (state is ChatMessagesFetched) {
           return SingleChildScrollView(
             child: ListView.builder(
-              shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: state.messages.length,
-              itemBuilder: (context, index) {
-                final chatMessage = state.messages[index];
-                final nextChatMessage = index + 1 < state.messages.length
-                    ? state.messages[index + 1]
-                    : null;
-                final currentMessageUserId = chatMessage.senderUserId;
-                final nextMessageUserId = nextChatMessage?.senderUserId;
-                final nextUserIsSame =
-                    currentMessageUserId == nextMessageUserId;
-                if (nextUserIsSame) {
-                  return MessageBubble.next(
-                    message: chatMessage,
-                    isMe: currentUser.id == currentMessageUserId,
-                  );
-                } else {
-                  return MessageBubble.last(
-                    message: chatMessage,
-                    isMe: currentUser.id == currentMessageUserId,
-                  );
-                }
+              shrinkWrap: true,
+              itemBuilder: (context, index1) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      state.messages.keys.toList()[index1],
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.messages.values.toList()[index1].length,
+                      itemBuilder: (context, index) {
+                        final chatMessage =
+                            state.messages.values.toList()[index1][index];
+                        final nextChatMessage = index + 1 <
+                                state.messages.values.toList()[index1].length
+                            ? state.messages.values.toList()[index1][index + 1]
+                            : null;
+                        final currentMessageUserId = chatMessage.senderUserId;
+                        final nextMessageUserId = nextChatMessage?.senderUserId;
+                        final nextUserIsSame =
+                            currentMessageUserId == nextMessageUserId;
+                        if (nextUserIsSame) {
+                          return MessageBubble.next(
+                            message: chatMessage,
+                            isMe: currentUser.id == currentMessageUserId,
+                          );
+                        } else {
+                          return MessageBubble.last(
+                            message: chatMessage,
+                            isMe: currentUser.id == currentMessageUserId,
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                );
               },
             ),
           );
+
+          //   ListView.builder(
+          //     shrinkWrap: true,
+          //     physics: const NeverScrollableScrollPhysics(),
+          //     itemCount: state.messages.length,
+          //     itemBuilder: (context, index) {
+          //       final chatMessage = state.messages[index];
+          //       final nextChatMessage = index + 1 < state.messages.length
+          //           ? state.messages[index + 1]
+          //           : null;
+          //       final currentMessageUserId = chatMessage.senderUserId;
+          //       final nextMessageUserId = nextChatMessage?.senderUserId;
+          //       final nextUserIsSame =
+          //           currentMessageUserId == nextMessageUserId;
+          //       if (nextUserIsSame) {
+          //         return MessageBubble.next(
+          //           message: chatMessage,
+          //           isMe: currentUser.id == currentMessageUserId,
+          //         );
+          //       } else {
+          //         return MessageBubble.last(
+          //           message: chatMessage,
+          //           isMe: currentUser.id == currentMessageUserId,
+          //         );
+          //       }
+          //     },
+          //   ),
+          // );
         } else if (state is ChatError) {
           return Center(
             child: Text(

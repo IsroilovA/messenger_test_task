@@ -87,6 +87,7 @@ class MessageBubble extends StatelessWidget {
                                   ),
                           softWrap: true,
                         ),
+                        const SizedBox(width: 3),
                         Icon(
                           message.isRead ? Icons.done_all : Icons.done,
                           size: 15,

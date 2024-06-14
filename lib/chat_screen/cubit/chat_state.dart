@@ -10,7 +10,7 @@ sealed class ChatState extends Equatable {
 final class ChatInitial extends ChatState {}
 
 final class ChatMessagesFetched extends ChatState {
-  final List<Message> messages;
+  final Map<String, List<Message>> messages;
 
   const ChatMessagesFetched(this.messages);
 }

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:messenger_test_task/data/models/message.dart';
 import 'package:messenger_test_task/data/models/user.dart';
 
@@ -10,6 +11,8 @@ List<User> users = [
   User(fullname: 'Алина Жукова'),
   User(fullname: 'Райан Гослинг'),
 ];
+
+final dateFormatter = DateFormat('dd.MM.yy');
 
 class MessengerRepository {
   List<Message> messages = [
@@ -141,14 +144,24 @@ class MessengerRepository {
 
   User getCurrentUser() => loggedUser;
 
-  List<Message> getChatMessages(User user) {
+  Map<String, List<Message>> getChatMessages(User user) {
+    Map<String, List<Message>> userMessagesSorted = {};
     final userMessages = messages
         .where((element) =>
             element.receiverUserId == user.id ||
             element.senderUserId == user.id)
         .toList();
     userMessages.sort((a, b) => a.dateTime.compareTo(b.dateTime));
-    return userMessages;
+
+    for (final msg in userMessages) {
+      if (userMessagesSorted.containsKey(dateFormatter.format(msg.dateTime))) {
+        userMessagesSorted[dateFormatter.format(msg.dateTime)]!.add(msg);
+      } else {
+        userMessagesSorted[dateFormatter.format(msg.dateTime)] = [msg];
+      }
+    }
+
+    return userMessagesSorted;
   }
 
   Message getChatLastMessage(User user) {
