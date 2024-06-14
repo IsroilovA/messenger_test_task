@@ -61,9 +61,65 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
-  void pickImage(BuildContext context, User user) async {
+  //image source dialog
+  void showImageSourcePickerDialog(
+      {required BuildContext context, required User user}) {
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: Text(
+          'Choose source',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: Theme.of(context).colorScheme.onSurface),
+        ),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                  iconSize: 50,
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                    pickImage(
+                        context: context,
+                        user: user,
+                        imageSource: ImageSource.gallery);
+                  },
+                  icon: const Icon(Icons.photo)),
+              IconButton(
+                  iconSize: 50,
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                    pickImage(
+                        context: context,
+                        user: user,
+                        imageSource: ImageSource.camera);
+                  },
+                  icon: const Icon(Icons.camera_alt))
+            ],
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel')),
+          )
+        ],
+      ),
+    );
+  }
+
+  //image picker
+  void pickImage(
+      {required BuildContext context,
+      required User user,
+      required ImageSource imageSource}) async {
     final pickedImage = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+      source: imageSource,
       imageQuality: 50,
       maxWidth: 400,
     );
@@ -75,6 +131,7 @@ class ChatCubit extends Cubit<ChatState> {
         : null;
   }
 
+  //image sender dialog
   void showImageSendingDialog(
     BuildContext context,
     File image,

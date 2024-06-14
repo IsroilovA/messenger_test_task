@@ -41,7 +41,7 @@ class MessageBubble extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: isMe
-                    ? const Color.fromARGB(255, 118, 227, 121)
+                    ? Theme.of(context).colorScheme.primary
                     : Theme.of(context)
                         .colorScheme
                         .surfaceContainerHighest
@@ -77,7 +77,12 @@ class MessageBubble extends StatelessWidget {
                       Text(
                         message.text!,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              color: Colors.black,
+                              color: isMe
+                                  ? Theme.of(context).colorScheme.onPrimary
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withAlpha(200),
                             ),
                         softWrap: true,
                       ),
@@ -86,10 +91,17 @@ class MessageBubble extends StatelessWidget {
                       children: [
                         Text(
                           dateFormatter.format(message.dateTime),
-                          style:
-                              Theme.of(context).textTheme.bodySmall!.copyWith(
-                                    color: Colors.black,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(
+                                color: isMe
+                                    ? Theme.of(context).colorScheme.onPrimary
+                                    : Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withAlpha(200),
+                              ),
                           softWrap: true,
                         ),
                         const SizedBox(width: 3),

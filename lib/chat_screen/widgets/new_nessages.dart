@@ -12,11 +12,10 @@ class NewMessages extends StatefulWidget {
 }
 
 class _NewMessagesState extends State<NewMessages> {
-
   final FocusNode _focus = FocusNode();
   final _messageController = TextEditingController();
   bool _isFocused = false;
-  
+
   @override
   void dispose() {
     _messageController.dispose();
@@ -35,6 +34,7 @@ class _NewMessagesState extends State<NewMessages> {
       _isFocused = _focus.hasFocus;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -52,7 +52,8 @@ class _NewMessagesState extends State<NewMessages> {
               child: IconButton(
                 onPressed: () {
                   BlocProvider.of<ChatCubit>(context)
-                      .pickImage(context, widget.user);
+                      .showImageSourcePickerDialog(
+                          context: context, user: widget.user);
                 },
                 iconSize: 40,
                 icon: const Icon(Icons.attach_file),
