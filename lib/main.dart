@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:messenger_test_task/home_screen/cubit/home_cubit.dart';
 import 'package:messenger_test_task/home_screen/home_screen.dart';
 import 'package:messenger_test_task/service/locator.dart';
+import 'package:messenger_test_task/service/messenger_repository.dart';
 
 // Theme for the light mode
 final lightTheme = ThemeData(
@@ -44,7 +47,12 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: lightTheme, // Applying the light theme
       darkTheme: darkTheme, // Applying the dark theme
-      home: const HomeScreen(),
+      home: BlocProvider(
+        create: (context) => HomeCubit(
+          messengerRepository: locator<MessengerRepository>(),
+        ),
+        child: const HomeScreen(),
+      ),
     );
   }
 }

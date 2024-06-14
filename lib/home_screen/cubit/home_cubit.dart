@@ -15,25 +15,42 @@ class HomeCubit extends Cubit<HomeState> {
 
   final MessengerRepository _messengerRepository;
 
+  List<User> users = [];
+
+  void onSearch(String query) {
+    emit(HomeUsersLoading());
+    if (users.isEmpty) {
+      return;
+    }
+    final searchedUsers = users
+        .where(
+            (user) => user.fullname.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    emit(HomeUsersFetched(searchedUsers));
+  }
+
   Future<void> getUsers() async {
     emit(HomeUsersLoading());
+    //get users and update ui
     try {
-      final users = await _messengerRepository.getUsers();
+      users = await _messengerRepository.getUsers();
       emit(HomeUsersFetched(users));
     } catch (e) {
       emit(HomeError(e.toString()));
     }
   }
 
+  //navigate to chat screen and update ui when came back
   void navigateToChat(BuildContext context, User user) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ChatScreen(user: user),
       ),
     );
-    emit(HomeInitial());
+    await getUsers();
   }
 
+  //get last chat messege
   Message? getChatLastMessage(User user) {
     try {
       return _messengerRepository.getChatLastMessage(user);

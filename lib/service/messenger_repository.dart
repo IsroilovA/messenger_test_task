@@ -2,8 +2,10 @@ import 'package:intl/intl.dart';
 import 'package:messenger_test_task/data/models/message.dart';
 import 'package:messenger_test_task/data/models/user.dart';
 
+//logged user
 final loggedUser = User(fullname: "Алишер Исроилов");
 
+//available dummy users
 List<User> users = [
   User(fullname: 'Виктор Власов', isOnline: true),
   User(fullname: 'Саша Алексеев'),
@@ -12,9 +14,11 @@ List<User> users = [
   User(fullname: 'Райан Гослинг'),
 ];
 
+//date formatter
 final dateFormatter = DateFormat('dd.MM.yy');
 
 class MessengerRepository {
+  //list of messeges
   List<Message> messages = [
     Message(
       dateTime: DateTime(2024, 5, 14, 9, 30),
@@ -138,12 +142,15 @@ class MessengerRepository {
     ),
   ];
 
+  //get available users
   List<User> getUsers() {
     return users;
   }
 
+  //get current user
   User getCurrentUser() => loggedUser;
 
+  //get chat messages sorted by date and devidede by date
   Map<String, List<Message>> getChatMessages(User user) {
     Map<String, List<Message>> userMessagesSorted = {};
     final userMessages = messages
@@ -164,6 +171,7 @@ class MessengerRepository {
     return userMessagesSorted;
   }
 
+  //get last chat messege
   Message getChatLastMessage(User user) {
     final userMessages = messages
         .where((element) =>
@@ -174,6 +182,7 @@ class MessengerRepository {
     return userMessages.last;
   }
 
+  //add new messege
   void addMessage(Message message) {
     messages.add(message);
   }
