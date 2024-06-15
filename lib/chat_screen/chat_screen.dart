@@ -39,7 +39,7 @@ class ChatScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
                 fontWeight: FontWeight.w600),
           ),
-          subtitle: Text(user.isOnline ? 'online' : 'offline'),
+          subtitle: Text(user.isOnline ? 'онлайн' : 'офлайн'),
         ),
       ),
       body: Padding(

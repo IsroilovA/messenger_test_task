@@ -68,7 +68,7 @@ class ChatCubit extends Cubit<ChatState> {
       context: context,
       builder: (ctx) => SimpleDialog(
         title: Text(
-          'Choose source',
+          'Выберите источник',
           style: Theme.of(context)
               .textTheme
               .titleLarge!
@@ -106,7 +106,7 @@ class ChatCubit extends Cubit<ChatState> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel')),
+                child: const Text('Отмена')),
           )
         ],
       ),
@@ -165,7 +165,7 @@ class ChatCubit extends Cubit<ChatState> {
                 onPressed: () {
                   Navigator.pop(ctx);
                 },
-                child: const Text("Cancel"),
+                child: const Text("Отмена"),
               ),
               IconButton(
                 color: Theme.of(context).colorScheme.primary,

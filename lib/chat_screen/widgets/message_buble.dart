@@ -79,10 +79,7 @@ class MessageBubble extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               color: isMe
                                   ? Theme.of(context).colorScheme.onPrimary
-                                  : Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
-                                      .withAlpha(200),
+                                  : Theme.of(context).colorScheme.onSurface,
                             ),
                         softWrap: true,
                       ),
@@ -97,18 +94,16 @@ class MessageBubble extends StatelessWidget {
                               .copyWith(
                                 color: isMe
                                     ? Theme.of(context).colorScheme.onPrimary
-                                    : Theme.of(context)
-                                        .colorScheme
-                                        .onSurface
-                                        .withAlpha(200),
+                                    : Theme.of(context).colorScheme.onSurface,
                               ),
                           softWrap: true,
                         ),
                         const SizedBox(width: 3),
-                        Icon(
-                          message.isRead ? Icons.done_all : Icons.done,
-                          size: 15,
-                        ),
+                        Icon(message.isRead ? Icons.done_all : Icons.done,
+                            size: 15,
+                            color: isMe
+                                ? Theme.of(context).colorScheme.onPrimary
+                                : Theme.of(context).colorScheme.onSurface),
                       ],
                     ),
                   ],

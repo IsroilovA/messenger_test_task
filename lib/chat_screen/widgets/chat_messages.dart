@@ -81,7 +81,7 @@ class ChatMessages extends StatelessWidget {
         } else {
           return Center(
             child: Text(
-              "something went wrong",
+              "Что то пошло не так",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),

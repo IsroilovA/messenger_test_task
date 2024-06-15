@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
           },
           child: Column(
             children: [
+              //show different text fields according to platforn
               Platform.isIOS
                   ? CupertinoSearchTextField(
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -41,6 +42,11 @@ class HomeScreen extends StatelessWidget {
                       },
                     )
                   : SearchBar(
+                      shadowColor: WidgetStateColor.resolveWith(
+                          (states) => Colors.transparent),
+                      shape: WidgetStateProperty.resolveWith((states) =>
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15))),
                       hintText: "Поиск",
                       leading: const Icon(Icons.search),
                       onChanged: (value) {
@@ -50,6 +56,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              //render list of chats
               BlocBuilder<HomeCubit, HomeState>(
                 builder: (context, state) {
                   if (state is HomeInitial) {
@@ -85,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                   } else {
                     return Center(
                       child: Text(
-                        "something went wrong",
+                        "Что то пошло не так",
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Theme.of(context).colorScheme.onSurface,
                             ),

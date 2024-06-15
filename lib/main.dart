@@ -47,6 +47,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: lightTheme, // Applying the light theme
       darkTheme: darkTheme, // Applying the dark theme
+      //provide global bloc
       home: BlocProvider(
         create: (context) => HomeCubit(
           messengerRepository: locator<MessengerRepository>(),

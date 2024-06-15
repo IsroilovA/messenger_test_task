@@ -1,16 +1,18 @@
-# messenger_test_task
+# Тестовое задание для мессенджера
 
-A new Flutter project.
+Тестовое задание на позицию Flutter разработчика. Данные хранятся в течение выполнения приложения.  
+Выполнил: aisroilov1029@gmail.com
 
-## Getting Started
+## Технологии
 
-This project is a starting point for a Flutter application.
+### Управление состоянием с помощью Cubit
 
-A few resources to get you started if this is your first Flutter project:
+Приложение использует шаблон Bloc (Cubit) для управления состоянием. Каждый функциональный модуль имеет свой собственный Cubit, который отвечает за управление состоянием. Это обеспечивает чистую и организованную кодовую базу с четким разделением бизнес-логики.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Репозиторий
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Создан репозиторий для взаимодействия с "базой данных".
+
+### Material UI
+
+Для создания приложения использован Material UI, что обеспечивает хороший внешний вид как в темной, так и в светлой теме.
